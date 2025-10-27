@@ -291,3 +291,11 @@
 .feedbackTextarea::placeholder {
     color: var(--text-dark);
 }
+
+.textWrapper {
+  display: inline-block;
+  max-width: 200px; /* or any suitable width */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
