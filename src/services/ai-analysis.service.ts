@@ -6,10 +6,6 @@ import { GoogleGenAI, Type, Schema } from '@google/genai';
 require("dotenv").config();
 
 
-/**
- * Dynamically generate the properties for the 'scores' object based on EVALUATION_PARAMETERS,
- * including specific scoring rules in the description.
- */
 const scoreProperties = EVALUATION_PARAMETERS.reduce((acc, param) => {
     // Determine the specific scoring rule text based on inputType
     const scoreRule = param.inputType === 'PASS_FAIL'
@@ -24,9 +20,6 @@ const scoreProperties = EVALUATION_PARAMETERS.reduce((acc, param) => {
 }, {} as Record<string, Schema>);
 
 
-/**
- * Define the required JSON Schema for the Gemini API, ensuring the output matches FeedbackResponse.
- */
 const FeedbackResponseSchema: Schema = {
     type: Type.OBJECT,
     properties: {
@@ -49,11 +42,6 @@ const FeedbackResponseSchema: Schema = {
 };
 
 
-// --- CORE FUNCTIONS ---
-
-/**
- * Analyzes call recording using Deepgram STT and Google Gemini structured output
- */
 export async function analyzeCallRecording(audioFile: File): Promise<FeedbackResponse> {
     try {
         const transcription = await transcribeAudio(audioFile);
@@ -67,9 +55,6 @@ export async function analyzeCallRecording(audioFile: File): Promise<FeedbackRes
     }
 }
 
-/**
- * Transcribe audio file using Deepgram STT
- */
 async function transcribeAudio(audioFile: File): Promise<string> {
     const deepgramApiKey = process.env.DEEPGRAM_API_KEY;
     console.log(deepgramApiKey)
@@ -106,9 +91,6 @@ async function transcribeAudio(audioFile: File): Promise<string> {
     return transcript;
 }
 
-/**
- * Analyze transcript using Google Gemini with GUARANTEED structured output
- */
 async function analyzeTranscript(transcript: string): Promise<FeedbackResponse> {
     const geminiApiKey = process.env.GOOGLE_GEMINI_API_KEY;
 
@@ -133,14 +115,15 @@ async function analyzeTranscript(transcript: string): Promise<FeedbackResponse> 
     // The response object structure is slightly different in the new SDK
     const text = response.text;
 
+    if (!text) {
+        throw new Error('Gemini API returned an empty response.text for structured output.');
+    }
+
     const analysisResults = JSON.parse(text) as FeedbackResponse;
 
     return analysisResults;
 }
 
-/**
- * Build comprehensive analysis prompt for Gemini
- */
 function buildAnalysisPrompt(transcript: string): string {
     const parametersDescription = EVALUATION_PARAMETERS.map(param => {
         const scoreType = param.inputType === 'PASS_FAIL'
