@@ -294,8 +294,9 @@
 
 .textWrapper {
   display: inline-block;
-  max-width: 200px; /* or any suitable width */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
 }
+
