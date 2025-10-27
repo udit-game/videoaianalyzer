@@ -1,0 +1,95 @@
+:root {
+    /* Theme Colors */
+    --primary-gradient-start: #ff69b4;
+    --primary-gradient-end: #6495ed;
+    --accent-pink: #ff69b4;
+    --accent-blue: #6495ed;
+    --accent-pink-hover: #ff1493;
+    --accent-blue-hover: #4169e1;
+
+    /* Background Colors */
+    --bg-gradient-start: #0f0c29;
+    --bg-gradient-mid: #302b63;
+    --bg-gradient-end: #24243e;
+
+    /* Glass Effect */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg-hover: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-strong: rgba(255, 255, 255, 0.2);
+    --glass-blur: 10px;
+
+    /* Text Colors */
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #999;
+    --text-dark: #777;
+
+    /* Status Colors */
+    --color-success: #4ecca3;
+    --color-warning: #ffcc00;
+    --color-error: #ff6b9d;
+
+    /* Shadow Colors */
+    --shadow-dark: rgba(0, 0, 0, 0.3);
+    --shadow-darker: rgba(0, 0, 0, 0.4);
+    --glow-pink: rgba(255, 105, 180, 0.3);
+    --glow-blue: rgba(100, 149, 237, 0.3);
+
+    /* Overlay Effects */
+    --overlay-pink: rgba(255, 105, 180, 0.15);
+    --overlay-blue: rgba(100, 149, 237, 0.15);
+    --overlay-pink-subtle: rgba(255, 105, 180, 0.1);
+    --overlay-blue-subtle: rgba(100, 149, 237, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, var(--overlay-pink) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, var(--overlay-blue) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#root {
+    position: relative;
+    z-index: 1;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--glass-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-pink) 0%, var(--accent-blue) 100%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--accent-pink-hover) 0%, var(--accent-blue-hover) 100%);
+}
