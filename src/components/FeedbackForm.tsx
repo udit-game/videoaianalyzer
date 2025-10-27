@@ -41,7 +41,8 @@ export const FeedbackForm: React.FC = () => {
           </div>
         )}
 
-        <ResultsDisplay results={results} />
+        {/* 👇 FIX: Only render ResultsDisplay if 'results' is not null and not currently processing */}
+        {!isProcessing && results && <ResultsDisplay results={results} />}
       </section>
     </div>
   );
